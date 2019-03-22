@@ -15,7 +15,7 @@ const createAuthorsAndBooks = async () => {
     );
     await Author.create(
         {
-            name: "Aldous HuxLey",
+            name: "Aldous Huxley",
             books: [
                 {title: "Brave New World"},
             ]

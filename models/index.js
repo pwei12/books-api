@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 //Configuration for connection to database
 //instance of sequelize
 //(database, username, password, options)
-const sequelize = new Sequelize("books-api", "postgres", "whydoineedpassword", {dialect: "postgres"})
+const sequelize = new Sequelize("books-api", "postgres", "whydoineedpassword", {dialect: "postgres", logging: false})
 
 //Pass models to connection
 const models = {
