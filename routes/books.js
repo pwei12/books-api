@@ -1,4 +1,3 @@
-const uuid = require("uuid/v4");
 const express = require("express");
 const router = express.Router();
 const { books: oldBooks } = require("../data/db.json");
@@ -21,11 +20,10 @@ router
   .route("/")
   .get(async (req, res) => {
     const { author, title } = req.query;
-
     if (title) {
       const books = await Book.findAll(
         {
-          where: {title, title},
+          where: {title},
           include: [Author]
         });
       res.json(books);
@@ -37,17 +35,23 @@ router
             where: {name: author}
           }]
         }
-      )
+      );
       res.json(books);
     } else {
       const books = await Book.findAll({include: [Author]});
       res.json(books);
     }
   })
-  .post(verifyToken, (req, res) => {
-    const book = req.body;
-    book.id = uuid();
-    res.status(201).json(req.body);
+  .post(verifyToken, async (req, res) => {
+    const {title, author} = req.body;
+    const [foundAuthor] = await Author.findOrCreate({where: {name: author}});
+    const newBook = await Book.create({title});
+    await newBook.setAuthor(foundAuthor); //newBook without author
+    const newBookWithAuthor = await Book.findOne({
+      where: { id: newBook.id},
+      include: [Author]
+    });
+    res.status(201).json(newBookWithAuthor);
   });
 
 router
