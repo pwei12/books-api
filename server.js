@@ -8,7 +8,7 @@ const port = process.env.PORT || 5555;
 //force true will drop all models before connect for our lab purpose
 sequelize.sync({force:true}).then(() => {
   //after table successfully created, seed the table
-  await createAuthorsAndBooks();
+  createAuthorsAndBooks();
   //connect
   app.listen(port, () => {
     if (process.env.NODE_ENV === "production") {
