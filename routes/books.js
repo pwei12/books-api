@@ -102,12 +102,11 @@ router
   })
   .delete(async (req, res) => {
     try {
-      const book = oldBooks.find(b => b.id === req.params.id);
-      if (book) {
-        res.sendStatus(202);
-      } else {
-        res.sendStatus(400);
-      }
+      const book = await Book.destroy({where: {id: req.params.id}});
+      if (!book) {
+        return res.sendStatus(400);
+      } 
+        return res.sendStatus(202);
     } catch (err) {
       return res.sendStatus(400);
     }
