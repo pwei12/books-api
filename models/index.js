@@ -4,7 +4,6 @@ const Sequelize = require("sequelize");
 //instance of sequelize
 //(database, username, password, options)
 // const sequelize = new Sequelize("books-api", "postgres", "whydoineedpassword", {dialect: "postgres", logging: false})
-const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 let sequelize;
